@@ -1,10 +1,5 @@
-import { getUserMessageFormCLI } from './src/getUserMessage'
-import { runLLM } from './src/llm'
+import { run } from './src/run'
 
-const userMessage = getUserMessageFormCLI()
+// run('one-off')
 
-const response = await runLLM({
-  messages: [{ role: 'user', content: userMessage }],
-})
-
-console.log(response)
+run('chat')

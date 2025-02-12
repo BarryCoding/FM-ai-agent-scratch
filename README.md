@@ -40,3 +40,19 @@ bun start # ✅ healthy error 🔴 triggered
 bun start "hi, my name is bun" # ✅ receive response
 bun start "who am I?" # ✅ receive response, but forget my name!
 ```
+
+## chat with memory
+
+```bash
+bun add uuid lowdb
+
+touch src/chatMemory.ts
+```
+
+- Project Structure
+  - Added necessary dependencies (openai, lowdb, uuid)
+  - Organized code into modular components
+- Chat Memory Implementation
+  - ⭐️ Added chat memory functionality using lowdb for persistent storage
+  - Created a database structure in `db.json`
+  - Implemented message history tracking with metadata (ID and timestamps)

@@ -1,9 +1,11 @@
-// bun start "userMessage"
-export const getUserMessageFormCLI = () => {
-  const userMessage = process.argv[2]
-  if (!userMessage) {
+import type { ChatCompletionUserMessageParam } from 'openai/resources/index.mjs'
+
+// bun start "userContent"
+export const getUserMessageFormCLI = (): ChatCompletionUserMessageParam => {
+  const userContent = process.argv[2]
+  if (!userContent) {
     console.error('Please provide a message')
     process.exit(1)
   }
-  return userMessage
+  return { role: 'user', content: userContent }
 }
