@@ -45,16 +45,12 @@ export const getMessagesFromDb = async () => {
 
 export const chatWithMemory = async () => {
   const userMessage = getUserMessageFormCLI()
-  console.log(`1 🔎 🔍 ~ chatWithMemory ~ userMessage:`, userMessage)
   const messagesInMemory = await getMessagesFromDb()
-  console.log(`2 🔎 🔍 ~ chatWithMemory ~ messagesInMemory:`, messagesInMemory)
 
   const messagesToAI = messagesInMemory.concat(userMessage)
-  console.log(`3 🔎 🔍 ~ chatWithMemory ~ messagesToAI:`, messagesToAI)
   const messageFromAI = await runLLM({
     messages: messagesToAI,
   })
-  console.log(`4 🔎 🔍 ~ chatWithMemory ~ messageFromAI:`, messageFromAI)
   const aiMessage: ChatCompletionAssistantMessageParam = { role: 'assistant', content: messageFromAI.content }
   await addMessagesToDb([userMessage, aiMessage])
   return messageFromAI
