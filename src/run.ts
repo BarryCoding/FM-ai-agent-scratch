@@ -1,7 +1,8 @@
+import { runAgent } from './agent'
 import { chatWithMemory } from './chatMemory'
 import { runOneOffLLM } from './llm'
 
-type ProgramTypes = 'chat' | 'one-off'
+type ProgramTypes = 'chat' | 'one-off' | 'agent'
 
 export const run = (type: ProgramTypes) => {
   switch (type) {
@@ -10,6 +11,9 @@ export const run = (type: ProgramTypes) => {
       break
     case 'chat':
       chatWithMemory()
+      break
+    case 'agent':
+      runAgent()
       break
     default:
       console.error('Invalid programType type')

@@ -23,6 +23,29 @@
       "content": "You’re Bun! Beyond that, I don’t have any specific information about you. If you’d like to share more about yourself or ask something specific, feel free!",
       "id": "2ef3029b-e69d-4fb3-9719-f920d3683ce2",
       "createdAt": "2025-02-12T04:05:56.027Z"
+    },
+    {
+      "role": "user",
+      "content": "what is the weather in Makati today?",
+      "id": "cbcf2953-fa53-4638-9aec-033f0cb26c74",
+      "createdAt": "2025-02-12T06:32:57.357Z"
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_Be3fErvXABSBNSTI2E24QzGf",
+          "type": "function",
+          "function": {
+            "name": "getWeather",
+            "arguments": "{\"location\":\"Makati\"}"
+          }
+        }
+      ],
+      "refusal": null,
+      "id": "4cfc0a91-92ce-4ad1-8865-912650bbc959",
+      "createdAt": "2025-02-12T06:32:57.357Z"
     }
   ]
 }

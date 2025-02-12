@@ -1,4 +1,4 @@
-import type { ChatCompletionMessageParam } from 'openai/resources/index.mjs'
+import type { ChatCompletionMessageParam, ChatCompletionTool } from 'openai/resources/index.mjs'
 import { getUserMessageFormCLI } from './getUserMessage'
 import { myAI } from './openai'
 
@@ -9,15 +9,19 @@ export const runLLM = async ({
   model = CHEAP_MODEL,
   messages,
   temperature = LOW_TEMPERATURE,
+  tools = [],
 }: {
   model?: string
   messages: ChatCompletionMessageParam[]
   temperature?: number
+  tools?: ChatCompletionTool[]
 }) => {
   const response = await myAI.chat.completions.create({
     model,
     messages,
     temperature,
+    tools,
+    parallel_tool_calls: false,
   })
 
   return response.choices[0].message

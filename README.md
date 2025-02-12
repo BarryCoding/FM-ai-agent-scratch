@@ -56,3 +56,27 @@ touch src/chatMemory.ts
   - ⭐️ Added chat memory functionality using lowdb for persistent storage
   - Created a database structure in `db.json`
   - Implemented message history tracking with metadata (ID and timestamps)
+
+## ai agent
+
+```bash
+bun add ora zod
+
+bun start "what is the weather in Makati today?"
+
+bun start "haha"
+# error: 400 An assistant message with 'tool_calls' must be followed by tool messages responding to each 'tool_call_id'.
+
+rm db.json # clear chat history
+```
+
+1. Added new UI components:
+   - Created `ui.ts` with loading spinner and message logging functionality
+   - Implemented colored console output for different message types
+   - Added support for tool calls visualization
+2. Dependencies:
+   - Added ora for terminal spinners
+   - Added zod for schema validation
+3. Updated core functionality:
+   - Modified `llm.ts` to support tool calls
+   - Added agent mode in `run.ts`
