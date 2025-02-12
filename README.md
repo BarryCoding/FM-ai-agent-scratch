@@ -74,9 +74,21 @@ rm db.json # clear chat history
    - Created `ui.ts` with loading spinner and message logging functionality
    - Implemented colored console output for different message types
    - Added support for tool calls visualization
+   - Added prefixes for different message types (user, content, tool)
 2. Dependencies:
    - Added ora for terminal spinners
    - Added zod for schema validation
 3. Updated core functionality:
    - Modified `llm.ts` to support tool calls
+   - Added `toolRunner.ts` for executing tool calls
    - Added agent mode in `run.ts`
+
+```bash
+rm db.json # clear chat history
+
+bun start "what is the weather in Makati?" # tool call get_weather
+
+bun start "what is the weather in Makati?" 
+# weather info is in the memory, AI reply with the result of the tool call
+# TODO: remove this redundant running
+```

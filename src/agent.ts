@@ -5,6 +5,7 @@ import { logMessage, showLoader } from './ui'
 
 import { zodFunction } from 'openai/helpers/zod'
 import { z } from 'zod'
+import { runTool } from './toolRunner'
 
 const GetWeatherParameters = z.object({
   location: z.string().describe('City and country e.g. Bogotá, Colombia, Makati'),
@@ -25,9 +26,23 @@ export const runAgent = async () => {
     messages: [...messagesInMemory, userMessage],
     tools: initialTools,
   })
+  logMessage(messageFromAI)
 
   await addMessagesToDb([userMessage, messageFromAI])
-  logMessage(messageFromAI)
+
+  if (messageFromAI.tool_calls) {
+    const toolCall = messageFromAI.tool_calls[0]
+    loader.update(`executing: ${toolCall.function.name}`)
+    const toolContent = await runTool(toolCall)
+    const toolMessage = {
+      role: 'tool',
+      content: toolContent,
+      tool_call_id: toolCall.id,
+    } as const
+    await addMessagesToDb([toolMessage])
+    loader.update(`executed: ${toolCall.function.name}`)
+  }
+
   loader.stop()
   // return getMessages()
 }

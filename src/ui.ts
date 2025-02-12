@@ -28,7 +28,7 @@ export const logMessage = (message: ChatCompletionMessageParam) => {
   // Log user messages (only have content)
   if (role === 'user') {
     console.log(`\n${color}[USER]${reset}`)
-    console.log(`${message.content}\n`)
+    console.log(`user: ${message.content}\n`)
     return
   }
 
@@ -38,7 +38,7 @@ export const logMessage = (message: ChatCompletionMessageParam) => {
     if ('tool_calls' in message && message.tool_calls) {
       message.tool_calls.forEach((tool) => {
         console.log(`\n${color}[ASSISTANT]${reset}`)
-        console.log(`${tool.function.name}\n`)
+        console.log(`tool: ${tool.function.name}\n`)
       })
       return
     }
@@ -46,7 +46,7 @@ export const logMessage = (message: ChatCompletionMessageParam) => {
     // If has content, log it
     if (message.content) {
       console.log(`\n${color}[ASSISTANT]${reset}`)
-      console.log(`${message.content}\n`)
+      console.log(`content: ${message.content}\n`)
     }
   }
 }
