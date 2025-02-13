@@ -2,16 +2,42 @@
   "messages": [
     {
       "role": "user",
+      "content": "hi, my name is bun",
+      "id": "7fc138d7-146a-434c-9d60-7e4261ee0a83",
+      "createdAt": "2025-02-13T01:52:46.142Z"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi Bun! How can I assist you today?",
+      "refusal": null,
+      "id": "ef5690c8-7ef9-4585-b294-a078dad2921f",
+      "createdAt": "2025-02-13T01:52:48.032Z"
+    },
+    {
+      "role": "user",
+      "content": "who am I?",
+      "id": "ae57c405-4b6a-4ca9-890f-cbf6eca4b479",
+      "createdAt": "2025-02-13T01:53:14.609Z"
+    },
+    {
+      "role": "assistant",
+      "content": "You mentioned that your name is Bun. If there's something specific you'd like to know about yourself or if you have any questions, feel free to share!",
+      "refusal": null,
+      "id": "aa2fab55-fc2d-4a52-bc72-9b34be0bcffb",
+      "createdAt": "2025-02-13T01:53:16.387Z"
+    },
+    {
+      "role": "user",
       "content": "what is the weather in Makati?",
-      "id": "d0815ea6-200f-48ac-b5f2-cfa2b6a6048a",
-      "createdAt": "2025-02-12T08:03:45.621Z"
+      "id": "a3456e84-a8d0-42aa-a16a-2e19cae6441f",
+      "createdAt": "2025-02-13T01:53:56.272Z"
     },
     {
       "role": "assistant",
       "content": null,
       "tool_calls": [
         {
-          "id": "call_p4O3v1GEOvsxiYtzEgT1Di7p",
+          "id": "call_q6cMgqLHIBxNOnj0ze7r3B00",
           "type": "function",
           "function": {
             "name": "getWeather",
@@ -20,28 +46,22 @@
         }
       ],
       "refusal": null,
-      "id": "6d5108e3-c43b-4bf8-abd4-b6d5cb1e2c83",
-      "createdAt": "2025-02-12T08:03:45.621Z"
+      "id": "7fb39a2c-b529-4350-95f9-63d65947a874",
+      "createdAt": "2025-02-13T01:54:01.649Z"
     },
     {
       "role": "tool",
       "content": "very cold. 17deg in Makati",
-      "tool_call_id": "call_p4O3v1GEOvsxiYtzEgT1Di7p",
-      "id": "65265376-0ae7-4a64-af18-27bbc92da68a",
-      "createdAt": "2025-02-12T08:03:45.625Z"
-    },
-    {
-      "role": "user",
-      "content": "what is the weather in Makati?",
-      "id": "2638e862-208b-44d6-8df0-71409f98a79c",
-      "createdAt": "2025-02-12T08:17:03.176Z"
+      "tool_call_id": "call_q6cMgqLHIBxNOnj0ze7r3B00",
+      "id": "08f94f5c-005b-4ebf-a750-f73748792ccb",
+      "createdAt": "2025-02-13T01:54:01.651Z"
     },
     {
       "role": "assistant",
       "content": "The weather in Makati is currently very cold, with a temperature of 17 degrees Celsius.",
       "refusal": null,
-      "id": "af258a10-93b7-45cf-bb21-e8ddd7cfe215",
-      "createdAt": "2025-02-12T08:17:03.176Z"
+      "id": "9b617251-2a51-4be4-9d33-c3335be03c96",
+      "createdAt": "2025-02-13T01:54:02.661Z"
     }
   ]
 }

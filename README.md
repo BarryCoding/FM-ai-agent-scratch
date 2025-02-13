@@ -82,13 +82,19 @@ rm db.json # clear chat history
    - Modified `llm.ts` to support tool calls
    - Added `toolRunner.ts` for executing tool calls
    - Added agent mode in `run.ts`
+   - run agent in loop
+     - tool call -> continue loop
+     - no tool call -> break loop
 
 ```bash
 rm db.json # clear chat history
 
-bun start "what is the weather in Makati?" # tool call get_weather
+bun start "hi, my name is bun"
 
-bun start "what is the weather in Makati?" 
-# weather info is in the memory, AI reply with the result of the tool call
-# TODO: remove this redundant running
+bun start "who am I?" # check the memory
+
+bun start "what is the weather in Makati?"
+# assistant: trigger tool get_weather
+# tool: save the get_weather response to chat memory
+# assistant: read the new chat memory and answer the user question
 ```

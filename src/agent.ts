@@ -3,46 +3,43 @@ import { getUserMessageFormCLI } from './getUserMessage'
 import { runLLM } from './llm'
 import { logMessage, showLoader } from './ui'
 
-import { zodFunction } from 'openai/helpers/zod'
-import { z } from 'zod'
-import { runTool } from './toolRunner'
-
-const GetWeatherParameters = z.object({
-  location: z.string().describe('City and country e.g. Bogotá, Colombia, Makati'),
-})
-const weatherTool = zodFunction({
-  name: 'getWeather',
-  description: 'Retrieves current weather for the given location.',
-  parameters: GetWeatherParameters,
-})
-const initialTools = [weatherTool]
+import { initialTools, runTool } from './toolRunner'
 
 export const runAgent = async () => {
   const userMessage = getUserMessageFormCLI()
+  await addMessagesToDb([userMessage])
+
   const loader = showLoader('🤖 Thinking...')
 
-  const messagesInMemory = await getMessagesFromDb()
-  const messageFromAI = await runLLM({
-    messages: [...messagesInMemory, userMessage],
-    tools: initialTools,
-  })
-  logMessage(messageFromAI)
+  // loop until the message is not a tool call
+  while (true) {
+    const messagesInMemory = await getMessagesFromDb()
+    const messageFromAI = await runLLM({
+      messages: [...messagesInMemory, userMessage],
+      tools: initialTools,
+    })
 
-  await addMessagesToDb([userMessage, messageFromAI])
+    await addMessagesToDb([messageFromAI])
+    logMessage(messageFromAI)
 
-  if (messageFromAI.tool_calls) {
-    const toolCall = messageFromAI.tool_calls[0]
-    loader.update(`executing: ${toolCall.function.name}`)
-    const toolContent = await runTool(toolCall)
-    const toolMessage = {
-      role: 'tool',
-      content: toolContent,
-      tool_call_id: toolCall.id,
-    } as const
-    await addMessagesToDb([toolMessage])
-    loader.update(`executed: ${toolCall.function.name}`)
+    // if the message is not a tool call,
+    // stop loop here
+    if (messageFromAI.content) {
+      loader.stop()
+      return
+    }
+
+    // if the message is a tool call, run the tool and add the result to the chat
+    // and continue the loop
+    if (messageFromAI.tool_calls) {
+      const toolCall = messageFromAI.tool_calls[0]
+      const toolContent = await runTool(toolCall)
+      const toolMessage = {
+        role: 'tool',
+        content: toolContent,
+        tool_call_id: toolCall.id,
+      } as const
+      await addMessagesToDb([toolMessage])
+    }
   }
-
-  loader.stop()
-  // return getMessages()
 }
