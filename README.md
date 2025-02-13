@@ -116,3 +116,8 @@ bun start "make me a meme image from the joke you just told me" # generate image
 rm db.json # clear chat history
 bun start "give me two NBA posts from reddit"
 ```
+
+## system prompt
+
+- Create new systemPrompt.ts with AI assistant instructions
+- Integrate system message into LLM conversation flow

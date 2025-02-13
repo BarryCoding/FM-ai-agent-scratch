@@ -1,6 +1,7 @@
 import type { ChatCompletionMessageParam, ChatCompletionTool } from 'openai/resources/index.mjs'
 import { getUserMessageFormCLI } from './getUserMessage'
 import { myAI } from './openai'
+import { systemMessage } from './systemPrompt'
 
 const CHEAP_MODEL = 'gpt-4o-mini' // cheap model
 const LOW_TEMPERATURE = 0.1 // stable output
@@ -18,7 +19,7 @@ export const runLLM = async ({
 }) => {
   const response = await myAI.chat.completions.create({
     model,
-    messages,
+    messages: [systemMessage, ...messages],
     temperature,
     tools,
     parallel_tool_calls: false,
