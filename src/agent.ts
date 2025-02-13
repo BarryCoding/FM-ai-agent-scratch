@@ -11,9 +11,11 @@ export const runAgent = async () => {
 
   const loader = showLoader('🤖 Thinking...')
 
+  // FIXME: race condition
   // loop until the message is not a tool call
   while (true) {
     const messagesInMemory = await getMessagesFromDb()
+    console.log(`🔎 🔍 ~ runAgent ~ messagesInMemory:`, messagesInMemory)
     const messageFromAI = await runLLM({
       messages: [...messagesInMemory, userMessage],
       tools: initialTools,
@@ -33,6 +35,7 @@ export const runAgent = async () => {
     // and continue the loop
     if (messageFromAI.tool_calls) {
       const toolCall = messageFromAI.tool_calls[0]
+      loader.update(`executing: ${toolCall.function.name}`)
       const toolContent = await runTool(toolCall)
       const toolMessage = {
         role: 'tool',
@@ -40,6 +43,7 @@ export const runAgent = async () => {
         tool_call_id: toolCall.id,
       } as const
       await addMessagesToDb([toolMessage])
+      loader.update(`done: ${toolCall.function.name}`)
     }
   }
 }

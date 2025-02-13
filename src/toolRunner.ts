@@ -1,6 +1,7 @@
 import type OpenAI from 'openai'
 import { zodFunction } from 'openai/helpers/zod'
 import { z } from 'zod'
+import { dadJoke, dadJokeTool, generateImage, generateImageTool, reddit, redditTool } from './tools'
 
 // can be anything from APIs, other agent response, etc.
 const getWeather = (...args: any[]) => 'very cold. 17deg in Makati'
@@ -14,17 +15,25 @@ const weatherTool = zodFunction({
   parameters: GetWeatherParameters,
 })
 
-export const initialTools = [weatherTool]
+export const initialTools = [weatherTool, dadJokeTool, redditTool, generateImageTool]
 
 export const runTool = async (messageToolCall: OpenAI.Chat.Completions.ChatCompletionMessageToolCall) => {
+  // input toolArgs types not safe!!!
   const input = {
-    toolArgs: JSON.parse(messageToolCall.function.arguments),
+    toolArgs: JSON.parse(messageToolCall.function.arguments ?? '{}'),
     otherParams: 'it can be anything or user prompts',
   }
   switch (messageToolCall.function.name) {
-    case 'getWeather':
+    case weatherTool.function.name:
       return getWeather(input)
+    // Real Tools
+    case dadJokeTool.function.name:
+      return dadJoke({})
+    case redditTool.function.name:
+      return reddit({})
+    case generateImageTool.function.name:
+      return generateImage({ prompt: input.toolArgs.prompt })
     default:
-      throw new Error(`Unknown tool: ${messageToolCall.function.name}`)
+      return `Never run this tool: ${messageToolCall.function.name} again, or else!`
   }
 }

@@ -98,3 +98,21 @@ bun start "what is the weather in Makati?"
 # tool: save the get_weather response to chat memory
 # assistant: read the new chat memory and answer the user question
 ```
+
+## real tools
+
+- Add dad joke generator tool with API integration
+- Add Reddit NBA feed tool to fetch top 10 posts
+- Implement DALL-E image generation tool
+- Update tool runner to handle new tools
+- Add loading state feedback during tool execution
+- Add console logging for debugging messages in memory
+
+```bash
+rm db.json # clear chat history
+bun start "give me a dad joke" # run multiply times?
+bun start "make me a meme image from the joke you just told me" # generate image is so expensive
+
+rm db.json # clear chat history
+bun start "give me two NBA posts from reddit"
+```
